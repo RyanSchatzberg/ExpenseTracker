@@ -1,12 +1,18 @@
 import json, os
 from datetime import datetime
-DATA_FILE = "data/expenses.json"
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+DATA_FILE = os.path.join(BASE_DIR, "data", "expenses.json")
 
 def load_data():
     if not os.path.exists(DATA_FILE):
+        with open(DATA_FILE, "w") as f:
+            json.dump([], f)
         return []
-    with open(DATA_FILE) as f:
-        return json.load(f)
+    try:
+        with open(DATA_FILE) as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        return []
 
 def save_data(expenses):
     with open(DATA_FILE, "w") as f:
@@ -27,9 +33,12 @@ def handle_command(args):
         print(f"Expense added successfully (ID: {expense['id']})")
 
     elif args.command == "list":
-        print("# ID    Date        Description    Amount")
-        for e in expenses:
-            print(f"# {e['id']}    {e['date']}    {e['description']}    ${e['amount']}")
+        if not expenses:
+            print("# No expenses found.")
+        else:
+            print("# ID    Date        Description    Amount")
+            for e in expenses:
+                print(f"# {e['id']}    {e['date']}    {e['description']}    ${e['amount']}")
     
     elif args.command == "summary":
         if args.month:
