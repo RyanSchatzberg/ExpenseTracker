@@ -1,20 +1,28 @@
+print("[DEBUG] tracker.py loaded ✅")
+
 import json, os
 from datetime import datetime
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 DATA_FILE = os.path.join(BASE_DIR, "data", "expenses.json")
 
 def load_data():
+    print(f"[DEBUG] Loading from: {DATA_FILE}")
     if not os.path.exists(DATA_FILE):
+        print("[DEBUG] File does not exist, creating new.")
         with open(DATA_FILE, "w") as f:
             json.dump([], f)
         return []
     try:
         with open(DATA_FILE) as f:
-            return json.load(f)
+            data = json.load(f)
+            print(f"[DEBUG] Loaded data: {data}")
+            return data
     except json.JSONDecodeError:
+        print("[DEBUG] JSON decode error - returning empty list.")
         return []
 
 def save_data(expenses):
+    print(f"[DEBUG] Saving to: {DATA_FILE}")
     with open(DATA_FILE, "w") as f:
         json.dump(expenses, f, indent=2)
 
@@ -28,7 +36,7 @@ def handle_command(args):
             "description": args.description,
             "amount": args.amount
         }
-        expenses.append
+        expenses.append(expense)
         save_data(expenses)
         print(f"Expense added successfully (ID: {expense['id']})")
 
