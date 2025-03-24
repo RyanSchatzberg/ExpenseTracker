@@ -7,6 +7,7 @@ DATA_FILE = os.path.join(BASE_DIR, "data", "expenses.json")
 
 def load_data():
     print(f"[DEBUG] Loading from: {DATA_FILE}")
+    print(f"[DEBUG] Using file: {DATA_FILE}")
     if not os.path.exists(DATA_FILE):
         print("[DEBUG] File does not exist, creating new.")
         with open(DATA_FILE, "w") as f:
@@ -23,6 +24,7 @@ def load_data():
 
 def save_data(expenses):
     print(f"[DEBUG] Saving to: {DATA_FILE}")
+    print(f"[DEBUG] Using file: {DATA_FILE}")
     with open(DATA_FILE, "w") as f:
         json.dump(expenses, f, indent=2)
 
