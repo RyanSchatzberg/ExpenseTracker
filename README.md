@@ -2,4 +2,5 @@
 
 Simple application that can add, subtract, and track expenses.
 
-https://github.com/RyanSchatzberg/ExpenseTracker
+Prompted by roadmap.sh
+https://roadmap.sh/projects/expense-tracker?fl=0
